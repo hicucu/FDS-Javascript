@@ -1,5 +1,5 @@
 function Q1() {
-  var x = 15;
+  const x = 15;
   if (x > 10 && x < 20) console.log(x);
 }
 
@@ -37,6 +37,7 @@ function Q6() {
 function Q7() {
   let result = 0;
   for (let i = 0; i < 10; i++) result += i;
+
   console.log(result);
 }
 
@@ -49,10 +50,7 @@ function Q8() {
 
 function Q9() {
   let result = 0;
-  for (let i = 0; i < 20; i++) {
-    if (i % 2 && i % 3) continue;
-    result += i;
-  }
+  for (let i = 0; i < 20; i++) if (!(i % 2 && i % 3)) result += i;
 
   console.log(result);
 }
@@ -70,6 +68,7 @@ function Q11() {
   let result = '';
   for (let i = 0; i < height; i++) {
     for (let j = 0; j <= i; j++) result += '*';
+
     result += '\n';
   }
   console.log(result);
@@ -91,6 +90,7 @@ function Q13() {
   let result = '';
   for (let i = 0; i < height; i++) {
     for (let j = 0; j < height - i; j++) result += '*';
+
     result += '\n';
   }
   console.log(result);
