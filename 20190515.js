@@ -6,7 +6,6 @@ function evenOrOdd(num) {
 console.log(evenOrOdd(2));
 console.log(evenOrOdd(3));
 console.log(evenOrOdd(1000));
-
 console.log('------------------------------');
 function evenOrOdd2(num) {
   return num % 2 ? 'Odd' : 'Even';
