@@ -42,13 +42,15 @@ function alphaString46(s) {
   // if (n >= 1000 && n < 1000000) return true;
   // return false;
 
-  if (s !== undefined && s.length > 3 && s.length < 7 && parseInt(s)) {
-    return true;
-  }
-  false;
+  // if (s !== undefined && s.length > 3 && s.length < 7 && parseInt(s)) {
+  //   return true;
+  // }
+  // false;
+
+  return !!(parseInt(s) && s.length > 3 && s.length < 7);
 }
-console.log(alphaString46('1234'));
-console.log(alphaString46('9014'));
+console.log(alphaString46('1234.0'));
+console.log(alphaString46('9014.000'));
 console.log(alphaString46('723'));
 console.log(alphaString46('a234'));
 console.log(alphaString46(''));
