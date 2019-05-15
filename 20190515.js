@@ -38,10 +38,14 @@ console.log(getCount8()); // 4000
 console.log(getCount8_2()); // 4000
 console.log('------------------------------');
 function alphaString46(s) {
-  if (s !== undefined && s.length > 3 && s.length < 7 && parseInt(s)) {
-    return true;
-  }
+  const n = parseInt(s);
+  if (n >= 1000 && n < 1000000) return true;
   return false;
+
+  // if (s !== undefined && s.length > 3 && s.length < 7 && parseInt(s)) {
+  //   return true;
+  // }
+  // false;
 }
 console.log(alphaString46('1234'));
 console.log(alphaString46('9014'));
