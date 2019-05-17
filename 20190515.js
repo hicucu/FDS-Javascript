@@ -37,6 +37,7 @@ function getCount8_2() {
 console.log(getCount8()); // 4000
 console.log(getCount8_2()); // 4000
 console.log('------------------------------');
+
 function alphaString46(s) {
   // const n = parseInt(s);
   // if (n >= 1000 && n < 1000000) return true;
@@ -47,7 +48,7 @@ function alphaString46(s) {
   // }
   // false;
 
-  return !!(parseInt(s) && s.length > 3 && s.length < 7);
+  return !isNaN(s) && s.length > 3 && s.length < 7;
 }
 console.log(alphaString46('1234.0'));
 console.log(alphaString46('9014.000'));
