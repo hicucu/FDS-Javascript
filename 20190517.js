@@ -104,14 +104,9 @@ console.log('n이 4인 경우: ' + waterMelon(4));
 console.log('-------------------9. 정수제곱근 판별하기-------------------');
 
 function nextSqaure(n) {
-  let result = '';
   if (isNaN(n)) return 'no';
 
-  Math.sqrt(n) === parseInt(Math.sqrt(n))
-    ? (result = Math.pow(Math.sqrt(n) + 1, 2))
-    : (result = 'no');
-
-  return result;
+  return Number.isInteger(Math.sqrt(n)) ? Math.pow(Math.sqrt(n) + 1, 2) : 'no';
 }
 
 console.log(nextSqaure()); // no
