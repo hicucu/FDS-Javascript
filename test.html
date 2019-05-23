@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>drag and drop</title>
+  </head>
+  <body>
+    <div style="size:25pt;" id="ajax_btn">샘플 요청하기</div>
+  </body>
+  <script type="text/javascript">
+    const button = document.getElementById("ajax_btn");
+    button.onclick = () => {
+      var data =
+        "key=07EC84EDBAAEDF481AF7CF2774108FFC&q=%EB%82%98&method=start&advanced=y&type1=word&type1=word&letter_s=2&letter_e=5&part=word&undefined=";
+
+      var xhr = new XMLHttpRequest();
+      xhr.withCredentials = true;
+
+      xhr.addEventListener("readystatechange", function() {
+        if (this.readyState === 4) {
+          console.log(this.responseText);
+        }
+      });
+      xhr.open("get", "https://krdict.korean.go.kr/api/search", true);
+      xhr.setRequestHeader("Access-Control-Allow-Origin", "*");
+      xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+      xhr.setRequestHeader("cache-control", "no-cache");
+      xhr.setRequestHeader(
+        "Postman-Token",
+        "06e59a7f-f8b1-467f-9206-66025b44a180"
+      );
+
+      xhr.send(data);
+    };
+  </script>
+</html>
