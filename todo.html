@@ -9,49 +9,53 @@
     <ul class="todos"></ul>
 
     <script>
-      const $inputTodo = document.querySelector(".input-todo");
-      const $add = document.querySelector(".add");
-      const $todos = document.querySelector(".todos");
+      const $inputTodo = document.querySelector('.input-todo');
+      const $add = document.querySelector('.add');
+      const $todos = document.querySelector('.todos');
 
       function addTodo(newTodo) {
-        const li = document.createElement("li");
-        li.classList.add("todo");
-        const chk = document.createElement("input");
-        chk.setAttribute("type", "checkbox");
-        chk.classList.add("chk");
-        li.append(chk);
-        li.append(`${newTodo}`);
-        const button = document.createElement("button");
-        button.classList.add("remove");
-        button.innerText = "X";
-        li.append(button);
-        $todos.append(li);
-        //$todos.innerHTML += `<li class='todo'><input type="checkbox" class="chk">${newTodo}<button class='remove'>X</button></li>`;
+        const $li = document.createElement('li');
+        $li.classList.add('todo');
+
+        const $chk = document.createElement('input');
+        $chk.setAttribute('type', 'checkbox');
+        $chk.classList.add('chk');
+
+        $li.append($chk);
+        $li.append(`${newTodo}`);
+
+        const $button = document.createElement('button');
+        $button.classList.add('remove');
+        $button.innerText = 'X';
+
+        $li.append($button);
+        $todos.append($li);
       }
       function removeTodo(todo) {
         $todos.removeChild(todo);
       }
 
-      function complete(todo) {
+      function complete(t) {
+        const todo = t;
         if (todo.checked) {
-          todo.parentElement.style.textDecoration = "line-through";
+          todo.parentElement.style.textDecoration = 'line-through';
         } else {
-          todo.parentElement.style.textDecoration = "";
+          todo.parentElement.style.textDecoration = '';
         }
       }
 
-      $add.onclick = function() {
+      $add.onclick = () => {
         addTodo($inputTodo.value);
-        $inputTodo.value = "";
+        $inputTodo.value = '';
       };
-      $todos.addEventListener("click", function(e) {
-        if (e.target.className === "remove") {
+      $todos.addEventListener('click', (e) => {
+        if (e.target.className === 'remove') {
           const target = e.target.parentNode;
           removeTodo(target);
         }
       });
-      $todos.addEventListener("change", function(e) {
-        if (e.target.className === "chk") {
+      $todos.addEventListener('change', (e) => {
+        if (e.target.className === 'chk') {
           const target = e.target;
           complete(target);
         }
