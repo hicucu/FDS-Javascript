@@ -14,14 +14,14 @@
       const $todos = document.querySelector(".todos");
 
       function addTodo(newTodo) {
-        var li = document.createElement("li");
+        const li = document.createElement("li");
         li.classList.add("todo");
-        var chk = document.createElement("input");
+        const chk = document.createElement("input");
         chk.setAttribute("type", "checkbox");
         chk.classList.add("chk");
         li.append(chk);
         li.append(`${newTodo}`);
-        var button = document.createElement("button");
+        const button = document.createElement("button");
         button.classList.add("remove");
         button.innerText = "X";
         li.append(button);
