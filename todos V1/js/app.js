@@ -1,35 +1,65 @@
-let todos = [
-  { id: 1, content: 'HTML', completed: true },
-  { id: 2, content: 'CSS', completed: true },
-  { id: 3, content: 'Javascript', completed: false }
-];
+
 const $inputTodo = document.querySelector('.input-todo');
 const $todos = document.querySelector('.todos');
 const $ckCompleteAll = document.querySelector('#ck-complete-all');
 const $btn = document.querySelector('.btn');
 
 class App {
-  constructor() {
-    this.clearCompleted = this.clearCompleted.bind(this);
-    this.render = this.render.bind(this);
-    this.removeTodo = this.removeTodo.bind(this);
-    this.generateId = this.generateId.bind(this);
+  constructor(t = []) {
+    this.todos = t;
+    this.init();
   }
 
-  clearCompleted() {
+  init() {
+    $todos.addEventListener('click', e => this.removeTodo(e));
+
+    $inputTodo.onkeyup = (e) => {
+      if ($inputTodo.value.trim() === '' || e.keyCode !== 13) return;
+      this.todos = [
+        { id: this.generateId(), content: $inputTodo.value, completed: false },
+        ...this.todos];
+      $inputTodo.value = '';
+      this.render();
+    };
+
+    $todos.onchange = (e) => {
+      this.todos = this.todos.map(
+        todo => Object.assign(todo, todo.id === +e.target.parentNode.id
+          ? { completed: !todo.completed }
+          : {})
+      );
+      this.render();
+    };
+    $ckCompleteAll.onclick = (e) => {
+      this.todos = this.todos.map(
+        todo => Object.assign(todo, e.target.checked ? { completed: true } : { completed: false })
+      );
+      this.render();
+    };
+    $btn.onclick = () => {
+      this.todos = this.todos.filter(todo => !todo.completed);
+      this.render();
+    };
+  }
+
+  setClearCompleted() {
     const $completedTodos = document.querySelector('.completed-todos');
     const $activeTodos = document.querySelector('.active-todos');
-    const { length } = todos.filter(todo => (todo.completed));
+    const { length } = this.todos.filter(todo => (todo.completed));
     $completedTodos.innerHTML = length;
-    $activeTodos.innerHTML = todos.length - length;
+    $activeTodos.innerHTML = this.todos.length - length;
   }
 
+  setCompletedAll() {
+    const notCompletedCount = this.todos.filter(todo => !todo.completed).length;
+    $ckCompleteAll.checked = notCompletedCount !== this.todos.length && !(notCompletedCount > 0);
+  }
 
   render() {
     while ($todos.hasChildNodes()) {
       $todos.removeChild($todos.firstChild);
     }
-    const lis = todos.map((todo) => {
+    const lis = this.todos.map((todo) => {
       const li = document.createElement('li');
       li.id = todo.id;
       li.classList.add('todo-item');
@@ -47,65 +77,38 @@ class App {
       label.setAttribute('for', `ck-${li.id}`);
       label.append(todo.content);
 
-      // <i class="remove-todo far fa-times-circle"></i>
       const img = document.createElement('i');
       img.classList.add('remove-todo');
       img.classList.add('far');
       img.classList.add('fa-times-circle');
 
-      // const button = document.createElement('button');
-      // button.classList.add('remove');
-      // button.append('X');
-
       li.append(checkBox);
       li.append(label);
-      // li.append(button);
       li.append(img);
       return li;
     });
     lis.forEach(li => $todos.append(li));
-    this.clearCompleted();
+
+    this.setClearCompleted();
+    this.setCompletedAll();
   }
 
   removeTodo(e) {
     if (e.target.classList.contains('remove-todo')) {
-      todos = todos.filter(todo => todo.id !== +e.target.parentNode.id);
+      this.todos = this.todos.filter(todo => todo.id !== +e.target.parentNode.id);
 
       this.render();
     }
   }
 
   generateId() {
-    return todos.length ? Math.max(...todos.map(todo => todo.id)) + 1 : 1;
+    return this.todos.length ? Math.max(...this.todos.map(todo => todo.id)) + 1 : 1;
   }
 }
-const app = new App();
+const app = new App([
+  { id: 1, content: 'HTML', completed: true },
+  { id: 2, content: 'CSS', completed: true },
+  { id: 3, content: 'Javascript', completed: false }
+]);
 
-$todos.addEventListener('click', e => app.removeTodo(e));
-
-$inputTodo.onkeyup = function (e) {
-  if ($inputTodo.value.trim() === '' || e.keyCode !== 13) return;
-  todos = [{ id: app.generateId(), content: $inputTodo.value, completed: false }, ...todos];
-  $inputTodo.value = '';
-  app.render();
-};
-
-$todos.onchange = function (e) {
-  todos = todos.map(
-    todo => Object.assign(todo, todo.id === +e.target.parentNode.id
-      ? { completed: !todo.completed }
-      : {})
-  );
-  app.render();
-};
-$ckCompleteAll.onclick = function (e) {
-  todos = todos.map(
-    todo => Object.assign(todo, e.target.checked ? { completed: true } : { completed: false })
-  );
-  app.render();
-};
-$btn.onclick = function () {
-  todos = todos.filter(todo => !todo.completed);
-  app.render();
-};
 app.render();
