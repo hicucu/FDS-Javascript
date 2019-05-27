@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Todos V0-2</title>
+  <style>
+  body {
+    width: 500px;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .input-todo {
+    padding-top: 30px;
+    width: 500px;
+    height: 60px;
+    font-size: 40px;
+    border: 0;
+  }
+
+  .input-todo:focus {
+    outline: none;
+  }
+
+  li {
+    text-align: left;
+    font-size: 25px;
+    list-style: none;
+  }
+
+  li input[type=checkbox] {
+    transform: scale(1.5);
+    vertical-align: middle;
+  }
+
+  .remove {
+    transform: scale(1.2);
+    vertical-align: middle;
+  }
+
+  /* input[type=checkbox]:checked + span {
+    text-decoration: line-through;
+  } */
+
+  </style>
+</head>
+<body>
+  <input class="input-todo" placeholder="What needs to be done?" autofocus>
+  <ul class="todos"></ul>
+  <script>
+    
+    let todos = [
+      { id: 1, content: 'HTML', completed: true },
+      { id: 2, content: 'CSS', completed: true },
+      { id: 3, content: 'Javascript', completed: false }
+    ];
+    const $inputTodo = document.querySelector('.input-todo');
+    const $todos = document.querySelector('.todos');
+
+    function render() {
+      while ($todos.hasChildNodes()) {
+        $todos.removeChild($todos.firstChild);
+      }
+      const lis = todos.map((todo) => {
+        const li = document.createElement('li');
+        li.id = todo.id;
+        li.classList.add('todo');
+
+        const checkBox = document.createElement('input');
+        checkBox.setAttribute('type', 'checkbox');
+
+        if (todo.completed) {
+          checkBox.setAttribute('checked', '');
+          li.style.textDecoration = 'line-through';
+        } else {
+          checkBox.classList.add('chk');
+          li.style.textDecoration = '';
+        }
+
+        const button = document.createElement('button');
+        button.classList.add('remove');
+        button.append('X');
+
+        li.append(checkBox);
+        li.append(todo.content);
+        li.append(button);
+        return li;
+      });
+      lis.forEach(li => $todos.append(li));
+    }
+
+    function removeTodo(e) {
+      if (e.target.classList.contains('remove')) {
+        todos = todos.filter(todo => todo.id !== +e.target.parentNode.id);
+
+        render();
+      }
+    }
+    function generateId() {
+      return todos.length ? Math.max(...todos.map(todo => todo.id)) + 1 : 1;
+    }
+    $todos.addEventListener('click', e => removeTodo(e));
+    $inputTodo.onkeyup = function (e) {
+      if ($inputTodo.value.trim() === '' || e.keyCode !== 13) return;
+      todos = [{ id: generateId(), content: $inputTodo.value, completed: false }, ...todos];
+      render();
+    };
+
+    $todos.onchange = function (e) {
+      todos = todos.map(
+        todo => Object.assign(todo, todo.id === +e.target.parentNode.id
+          ? { completed: !todo.completed }
+          : {})
+      );
+      render();
+    };
+    
+    render();
+  </script>
+</body>
+</html>
