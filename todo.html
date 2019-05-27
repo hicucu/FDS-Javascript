@@ -14,7 +14,19 @@
       const $todos = document.querySelector(".todos");
 
       function addTodo(newTodo) {
-        $todos.innerHTML += `<li class='todo'><input type="checkbox" class="chk">${newTodo}<button class='remove'>X</button></li>`;
+        var li = document.createElement("li");
+        li.classList.add("todo");
+        var chk = document.createElement("input");
+        chk.setAttribute("type", "checkbox");
+        chk.classList.add("chk");
+        li.append(chk);
+        li.append(`${newTodo}`);
+        var button = document.createElement("button");
+        button.classList.add("remove");
+        button.innerText = "X";
+        li.append(button);
+        $todos.prepend(li);
+        //$todos.innerHTML += `<li class='todo'><input type="checkbox" class="chk">${newTodo}<button class='remove'>X</button></li>`;
       }
       function removeTodo(todo) {
         $todos.removeChild(todo);
