@@ -53,7 +53,9 @@ class App {
 
   setCompletedAll() {
     const notCompletedCount = this.todos.filter(todo => !todo.completed).length;
-    this.$ckCompleteAll.checked = notCompletedCount !== this.todos.length && !(notCompletedCount > 0);
+
+    this.$ckCompleteAll.checked = notCompletedCount !== this.todos.length
+    && !(notCompletedCount > 0);
   }
 
   render() {
