@@ -86,6 +86,7 @@ $todos.addEventListener('click', e => app.removeTodo(e));
 $inputTodo.onkeyup = function (e) {
   if ($inputTodo.value.trim() === '' || e.keyCode !== 13) return;
   todos = [{ id: app.generateId(), content: $inputTodo.value, completed: false }, ...todos];
+  $inputTodo.value = '';
   app.render();
 };
 
@@ -103,7 +104,7 @@ $ckCompleteAll.onclick = function (e) {
   );
   app.render();
 };
-$btn.onclick = function (e) {
+$btn.onclick = function () {
   todos = todos.filter(todo => !todo.completed);
   app.render();
 };
