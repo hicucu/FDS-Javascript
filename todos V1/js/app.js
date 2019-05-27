@@ -1,28 +1,27 @@
-
-const $inputTodo = document.querySelector('.input-todo');
-const $todos = document.querySelector('.todos');
-const $ckCompleteAll = document.querySelector('#ck-complete-all');
-const $btn = document.querySelector('.btn');
-
 class App {
   constructor(t = []) {
     this.todos = t;
+
+    this.$inputTodo = document.querySelector('.input-todo');
+    this.$todos = document.querySelector('.todos');
+    this.$ckCompleteAll = document.querySelector('#ck-complete-all');
+    this.$btn = document.querySelector('.btn');
     this.init();
   }
 
   init() {
-    $todos.addEventListener('click', e => this.removeTodo(e));
+    this.$todos.addEventListener('click', e => this.removeTodo(e));
 
-    $inputTodo.onkeyup = (e) => {
-      if ($inputTodo.value.trim() === '' || e.keyCode !== 13) return;
+    this.$inputTodo.onkeyup = (e) => {
+      if (this.$inputTodo.value.trim() === '' || e.keyCode !== 13) return;
       this.todos = [
-        { id: this.generateId(), content: $inputTodo.value, completed: false },
+        { id: this.generateId(), content: this.$inputTodo.value, completed: false },
         ...this.todos];
-      $inputTodo.value = '';
+      this.$inputTodo.value = '';
       this.render();
     };
 
-    $todos.onchange = (e) => {
+    this.$todos.onchange = (e) => {
       this.todos = this.todos.map(
         todo => Object.assign(todo, todo.id === +e.target.parentNode.id
           ? { completed: !todo.completed }
@@ -30,13 +29,15 @@ class App {
       );
       this.render();
     };
-    $ckCompleteAll.onclick = (e) => {
+
+    this.$ckCompleteAll.onclick = (e) => {
       this.todos = this.todos.map(
         todo => Object.assign(todo, e.target.checked ? { completed: true } : { completed: false })
       );
       this.render();
     };
-    $btn.onclick = () => {
+
+    this.$btn.onclick = () => {
       this.todos = this.todos.filter(todo => !todo.completed);
       this.render();
     };
@@ -52,12 +53,12 @@ class App {
 
   setCompletedAll() {
     const notCompletedCount = this.todos.filter(todo => !todo.completed).length;
-    $ckCompleteAll.checked = notCompletedCount !== this.todos.length && !(notCompletedCount > 0);
+    this.$ckCompleteAll.checked = notCompletedCount !== this.todos.length && !(notCompletedCount > 0);
   }
 
   render() {
-    while ($todos.hasChildNodes()) {
-      $todos.removeChild($todos.firstChild);
+    while (this.$todos.hasChildNodes()) {
+      this.$todos.removeChild(this.$todos.firstChild);
     }
     const lis = this.todos.map((todo) => {
       const li = document.createElement('li');
@@ -87,7 +88,7 @@ class App {
       li.append(img);
       return li;
     });
-    lis.forEach(li => $todos.append(li));
+    lis.forEach(li => this.$todos.append(li));
 
     this.setClearCompleted();
     this.setCompletedAll();
