@@ -59,9 +59,7 @@ class App {
   }
 
   render() {
-    while (this.$todos.hasChildNodes()) {
-      this.$todos.removeChild(this.$todos.firstChild);
-    }
+    [...this.$todos.children].forEach(c => c.remove());
     const lis = this.todos.map((todo) => {
       const li = document.createElement('li');
       li.id = todo.id;
