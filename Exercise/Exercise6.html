@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Stop watch</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+
+    .stop-watch {
+      font-family: 'Source Code Pro', monospace;
+      text-align: center;
+      font-size: 3em;
+      padding: 30px;
+    }
+
+    .control {
+      width: 300px;
+      padding: 5px;
+      margin-top: 15px;
+      font-size: 36px;
+      font-weight: bold;
+      border: 2px solid #f44336;
+      border-radius: 4px;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .control:hover {
+      background: #f44336;
+      color: aliceblue;
+    }
+  </style>
+  <title>Stop watch</title>
+</head>
+<body>
+  <div class="stop-watch">
+    <div class="display">00:00:00</div>
+    <button class="control">Start</button>
+  </div>
+  <script>
+    (function () {
+      let isRun = false;
+      let timer = -1;
+      const $control = document.querySelector('.control');
+      const $display = document.querySelector('.display');
+      let display = 0;
+      let milSec = 0;
+      function addSec() {
+        milSec += 1;
+        if (milSec === 10) {
+          milSec = 0;
+          display += 1;
+        }
+
+        display += 1;
+        const mil = '0' + (display % 100);
+        const sec = '0' + (Number.parseInt(display/100) % 60);
+        const min = '0' + (Number.parseInt(Number.parseInt(display/100) / 60) % 60);
+        const tempDisplay = `${min.slice(-2)}:${sec.slice(-2)}:${mil.slice(-2)}`;
+        $display.innerHTML = tempDisplay;
+      }
+
+      $control.onclick = () => {
+        if (isRun) {
+          clearInterval(timer);
+        } else {
+          timer = setInterval(addSec, 1);
+        }
+        isRun = !isRun;
+      }      
+    }());
+  </script>
+</body>
+</html>
