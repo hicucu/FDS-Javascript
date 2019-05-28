@@ -41,13 +41,12 @@
 
   <script>
     (function () {
-
       let counter = 0;
 
       const $container = document.querySelector('.container');
       const $counter = document.querySelector('.counter');
 
-      $container.onclick = function (e) {        
+      $container.onclick = function (e) {
         if (e.target.classList.contains('increase')) {
           counter += 1;
         } else if (e.target.classList.contains('decrease')) {
