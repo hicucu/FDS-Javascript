@@ -54,7 +54,6 @@
           display += 1;
         }
 
-        display += 1;
         const mil = '0' + (display % 100);
         const sec = '0' + (Number.parseInt(display/100) % 60);
         const min = '0' + (Number.parseInt(Number.parseInt(display/100) / 60) % 60);
@@ -69,7 +68,7 @@
           timer = setInterval(addSec, 1);
         }
         isRun = !isRun;
-      }      
+      };
     }());
   </script>
 </body>
