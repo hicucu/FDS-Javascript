@@ -54,8 +54,8 @@
           display += 1;
 
           const mil = '0' + (display % 100);
-          const sec = '0' + (Number.parseInt(display/100) % 60);
-          const min = '0' + (Number.parseInt(Number.parseInt(display/100) / 60) % 60);
+          const sec = '0' + (Number.parseInt(display / 100, 10) % 60);
+          const min = '0' + (Number.parseInt(Number.parseInt(display / 100, 10) / 60, 10) % 60);
           const tempDisplay = `${min.slice(-2)}:${sec.slice(-2)}:${mil.slice(-2)}`;
           $display.innerHTML = tempDisplay;
         }
