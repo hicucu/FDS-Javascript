@@ -1,6 +1,6 @@
 class App {
   constructor(t = []) {
-    this.todos = t;
+    this._todos = t;
 
     this.$inputTodo = document.querySelector('.input-todo');
     this.$todos = document.querySelector('.todos');
@@ -8,27 +8,40 @@ class App {
     this.$clearCompletedBtn = document.querySelector('.clear-completed > .btn');
     this.$nav = document.querySelector('.nav');
 
-    this.navTarget = 'all';
+    this._navTarget = 'all';
 
     this.init();
+  }
+
+  get todos() {
+    return this._todos;
+  }
+
+  set todos(todos) {
+    this._todos = todos;
+    this.render();
+  }
+
+  get navTarget() {
+    return this._navTarget;
+  }
+
+  set navTarget(navTarget) {
+    this._navTarget = navTarget;
+    this.render();
   }
 
   init() {
     this.$nav.onclick = (e) => {
       if (e.target.nodeName === 'UL') return;
       this.setNavTarget(e.target);
-      this.render();
     };
 
     this.$todos.addEventListener('click', e => this.removeTodo(e));
 
     this.$inputTodo.onkeyup = (e) => {
       if (this.$inputTodo.value.trim() === '' || e.keyCode !== 13) return;
-      this.todos = [
-        { id: this.generateId(), content: this.$inputTodo.value, completed: false },
-        ...this.todos];
-      this.$inputTodo.value = '';
-      this.render();
+      this.addTodo();
     };
 
     this.$todos.onchange = (e) => {
@@ -37,18 +50,23 @@ class App {
           ? { completed: !todo.completed }
           : {})
       );
-      this.render();
     };
 
     this.$ckCompleteAll.onclick = (e) => {
       this.togleCheckboxAll(e.target.checked);
-      this.render();
     };
 
     this.$clearCompletedBtn.onclick = () => {
       this.clearComplete();
-      this.render();
     };
+  }
+
+  addTodo() {
+    this.todos = [
+      { id: this.generateId(), content: this.$inputTodo.value, completed: false },
+      ...this.todos];
+
+    this.$inputTodo.value = '';
   }
 
   setNavTarget(target) {
@@ -144,8 +162,6 @@ class App {
   removeTodo(e) {
     if (e.target.classList.contains('remove-todo')) {
       this.todos = this.todos.filter(todo => todo.id !== +e.target.parentNode.id);
-
-      this.render();
     }
   }
 
@@ -157,8 +173,6 @@ class App {
     this.todos = [{ id: 1, content: 'HTML', completed: true },
       { id: 2, content: 'CSS', completed: true },
       { id: 3, content: 'Javascript', completed: false }];
-
-    this.render();
   }
 }
 const app = new App();
