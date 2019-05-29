@@ -333,4 +333,4 @@ ASALocalRun/
 .eslintrc.js
 package*
 
-test.js
+*test*

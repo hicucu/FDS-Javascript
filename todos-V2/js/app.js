@@ -2,15 +2,11 @@ class App {
   constructor(t = []) {
     this._todos = t;
 
-    this.$inputTodo = document.querySelector('.input-todo');
-    this.$todos = document.querySelector('.todos');
-    this.$ckCompleteAll = document.querySelector('#ck-complete-all');
-    this.$clearCompletedBtn = document.querySelector('.clear-completed > .btn');
-    this.$nav = document.querySelector('.nav');
-
     this._navTarget = 'all';
 
     this.init();
+
+    this.getTodos();
   }
 
   get todos() {
@@ -32,6 +28,12 @@ class App {
   }
 
   init() {
+    this.$inputTodo = document.querySelector('.input-todo');
+    this.$todos = document.querySelector('.todos');
+    this.$ckCompleteAll = document.querySelector('#ck-complete-all');
+    this.$clearCompletedBtn = document.querySelector('.clear-completed > .btn');
+    this.$nav = document.querySelector('.nav');
+
     this.$nav.onclick = (e) => {
       if (e.target.nodeName === 'UL') return;
       this.setNavTarget(e.target);
@@ -175,8 +177,7 @@ class App {
       { id: 3, content: 'Javascript', completed: false }];
   }
 }
-const app = new App();
 
 window.onload = function () {
-  app.getTodos();
+  const app = new App();
 };
