@@ -15,6 +15,7 @@ class App {
 
   init() {
     this.$nav.onclick = (e) => {
+      if (e.target.nodeName === 'UL') return;
       this.setNavTarget(e.target);
       this.render();
     };
