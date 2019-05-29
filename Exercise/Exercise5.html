@@ -41,19 +41,26 @@
 
   <script>
     (function () {
-      let counter = 0;
-
       const $container = document.querySelector('.container');
       const $counter = document.querySelector('.counter');
 
+      const counter = {
+        get num() {
+          return this._num || 0;
+        },
+        set num(num) {
+          this._num = num;
+
+          $counter.innerText = this._num;
+        }
+      };
+
       $container.onclick = function (e) {
         if (e.target.classList.contains('increase')) {
-          counter += 1;
+          counter.num += 1;
         } else if (e.target.classList.contains('decrease')) {
-          counter -= 1;
-        } else return;
-
-        $counter.innerText = counter;
+          counter.num -= 1;
+        }
       };
     }());
   </script>
