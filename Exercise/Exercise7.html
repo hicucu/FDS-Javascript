@@ -74,9 +74,10 @@
   <script>
     // document.querySelector('.second').style.transform = "rotate(7deg)"
     (function () {
-      let sec = 50;
-      let min = 59;
-      let hour = 12;
+      const currentTime = new Date();
+      let sec = currentTime.getSeconds();
+      let min = currentTime.getMinutes();
+      let hour = currentTime.getHours();
       const $second = document.querySelector('.second');
       const $minute = document.querySelector('.minute');
       const $hour = document.querySelector('.hour');
