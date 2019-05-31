@@ -58,8 +58,8 @@
       $container.onclick = function (e) {
         if (e.target.classList.contains('increase')) {
           counter.num += 1;
-        } else if (e.target.classList.contains('decrease')) {
-          counter.num = counter.num > 0 ? counter.num -= 1 : counter.num = 0;
+        } else if (counter.num > 0 && e.target.classList.contains('decrease')) {
+          counter.num -= 1;
         }
       };
     }());
