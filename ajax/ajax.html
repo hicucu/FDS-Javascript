@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>  
+  <title>Ajax</title>
+</head>
+<body>  
+  <pre class="result"></pre>
+  <script>
+    
+    const $result = document.querySelector('.result');
+    
+
+    const ajaxTest = function (method, uri, $target, payload) {      
+      const xhr = new XMLHttpRequest();
+
+      xhr.open(method, uri);
+      xhr.setRequestHeader('Content-Type', 'application/json');
+
+      xhr.send(JSON.stringify(payload));
+
+      xhr.onreadystatechange = () => {
+        if (xhr.readyState !== XMLHttpRequest.DONE) {
+          return;
+        }
+        if (xhr.status >= 200 && xhr.status < 400) {
+          $target.innerHTML = xhr.response;
+        } else {
+          console.error(xhr.status);
+        }
+      };
+    };
+
+    // ajaxTest('GET', 'http://127.0.0.1:3000/todos', $result);    
+    // ajaxTest('GET', 'http://127.0.0.1:3000/todos/1', $result); 
+    // ajaxTest('POST', 'http://127.0.0.1:3000/todos', $result, { id: 4, content: 'React', completed: false });
+    // ajaxTest('GET', 'http://127.0.0.1:3000/todos/', $result);
+    // ajaxTest('PUT', 'http://127.0.0.1:3000/todos/3', $result, { id: 3, content: 'JAJAVAVA', completed: true });
+    ajaxTest('PATCH', 'http://127.0.0.1:3000/todos/1', $result, { completed: false });
+    </script>
+</body>
+</html> 

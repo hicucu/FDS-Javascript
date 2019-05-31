@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>Promiss Test</title>
+</head>
+<body>
+  <pre class="result"></pre>
+  <script>
+    
+    const $result = document.querySelector('.result');
+
+    const render = (content) => { $result.innerHTML = content; };
+
+    const fetchTest = function (method, uri, payload) {
+      return fetch(uri, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+    };
+    // fetchTest('GET', 'http://127.0.0.1:3000/todos')
+    //   .then(res => res.json())
+    //   .then(res => JSON.stringify(res, null, 2))
+    //   .then(render)
+    //   .catch(console.error);
+
+    // fetchTest('GET', 'http://127.0.0.1:3000/todos/1').then(res => res.json())
+    //   .then(res => JSON.stringify(res, null, 2))
+    //   .then(render)
+    //   .catch(console.error);
+
+    // fetchTest('POST', 'http://127.0.0.1:3000/todos', { id: 4, content: 'React', completed: false }).then(res => res.json())
+    //   .then(res => JSON.stringify(res, null, 2))
+    //   .then(render)
+    //   .catch(console.error);
+
+    // fetchTest('PUT', 'http://127.0.0.1:3000/todos/3', { id: 3, content: 'JAJAVAVA', completed: true }).then(res => res.json())
+    //   .then(res => JSON.stringify(res, null, 2))
+    //   .then(render)
+    //   .catch(console.error);
+
+    fetchTest('PATCH', 'http://127.0.0.1:3000/todos/4', { content: 'VUE' }).then(res => res.json())
+      .then(res => JSON.stringify(res, null, 2))
+      .then(render)
+      .catch(console.error);
+  </script>
+</body>
+</html>
