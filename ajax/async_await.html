@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>Promiss Test</title>
+</head>
+<body>
+  <pre class="result"></pre>
+  <script>
+    
+    const $result = document.querySelector('.result');
+
+    const render = (content) => { $result.innerHTML = content; };
+
+    const promissTest = function (method, uri, payload) {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+
+        xhr.open(method, uri);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+
+        xhr.send(JSON.stringify(payload));
+
+        xhr.onreadystatechange = () => {
+          if (xhr.readyState !== XMLHttpRequest.DONE) {
+            return;
+          }
+          if (xhr.status >= 200 && xhr.status < 400) {
+            resolve(xhr.response);
+          } else {
+            reject(xhr.status);
+          }
+        };
+      });
+    };
+
+    (async function () {
+      const res = await promissTest('GET', 'http://localhost:3000/todos');
+      render(res);
+    }());
+  </script>
+</body>
+</html>
