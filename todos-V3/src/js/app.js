@@ -32,7 +32,6 @@
       this.$inputTodo = document.querySelector('.input-todo');
       this.$todos = document.querySelector('.todos');
       this.$ckCompleteAll = document.querySelector('#ck-complete-all');
-      this.$clearCompletedBtn = document.querySelector('.clear-completed > .btn');
       this.$nav = document.querySelector('.nav');
 
       this.$todos.addEventListener('click', e => this.removeTodo(e.target));
@@ -41,7 +40,9 @@
 
       this.$ckCompleteAll.onclick = (e) => { this.togleCheckboxAll(e.target.checked); };
 
-      this.$clearCompletedBtn.onclick = () => { this.clearComplete(); };
+      const clearCompletedBtn = document.querySelector('.clear-completed > .btn');
+
+      clearCompletedBtn.onclick = () => { this.clearComplete(); };
 
       this.$nav.onclick = (e) => {
         if (e.target.nodeName === 'UL') return;
@@ -87,16 +88,16 @@
       this.getTodos('PATCH', 'http://127.0.0.1:9000/todos', { completed });
     }
 
-    setButtonClearCompleted() {
-      const $completedTodos = document.querySelector('.completed-todos');
-      const $activeTodos = document.querySelector('.active-todos');
+    setClearCompletedDiv() {
+      const completedTodos = document.querySelector('.completed-todos');
+      const activeTodos = document.querySelector('.active-todos');
       const { length } = this.todos.filter(todo => (todo.completed));
 
-      $completedTodos.innerHTML = length;
-      $activeTodos.innerHTML = this.todos.length - length;
+      completedTodos.innerHTML = length;
+      activeTodos.innerHTML = this.todos.length - length;
     }
 
-    setItemLeft() {
+    setCheckboxAll() {
       const notCompletedCount = this.todos.filter(todo => !todo.completed).length;
 
       this.$ckCompleteAll.checked = notCompletedCount !== this.todos.length
@@ -120,7 +121,7 @@
       return activeList;
     }
 
-    changeTodoList4HTML(displayList) {
+    changeTodosList(displayList) {
       [...this.$todos.children].forEach(c => c.remove());
 
       const todos = displayList.map((todo) => {
@@ -158,9 +159,9 @@
 
     render() {
       const displayList = this.getActiveNavList();
-      this.changeTodoList4HTML(displayList);
-      this.setButtonClearCompleted();
-      this.setItemLeft();
+      this.changeTodosList(displayList);
+      this.setClearCompletedDiv();
+      this.setCheckboxAll();
     }
 
     removeTodo(target) {
