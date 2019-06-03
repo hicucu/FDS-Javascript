@@ -1,4 +1,9 @@
 (function () {
+  const SERVER = 'http://127.0.0.1:9000';
+  const TODOS = `${SERVER}/todos`;
+  const TODO = id => `${SERVER}/todos/${id}`;
+  const COMPLETE = `${SERVER}/todos/completed`;
+
   class App {
     constructor(t = []) {
       this._todos = t;
@@ -7,7 +12,7 @@
 
       this.init();
 
-      this.getTodos('GET', 'http://127.0.0.1:9000/todos');
+      this.getTodos('GET', TODOS);
     }
 
     get todos() {
@@ -60,8 +65,7 @@
     togleTodo(target) {
       const { id } = target.parentNode;
       const completed = target.checked;
-
-      this.getTodos('PATCH', `http://127.0.0.1:9000/todos/${id}`, { id, completed });
+      this.getTodos('PATCH', TODO(id), { id, completed });
     }
 
     addTodo() {
@@ -69,7 +73,7 @@
       const content = this.$inputTodo.value;
       const completed = false;
 
-      this.getTodos('POST', 'http://127.0.0.1:9000/todos', { id, content, completed });
+      this.getTodos('POST', TODOS, { id, content, completed });
 
       this.$inputTodo.value = '';
     }
@@ -81,11 +85,11 @@
     }
 
     clearComplete() {
-      this.getTodos('DELETE', 'http://127.0.0.1:9000/todos/completed');
+      this.getTodos('DELETE', COMPLETE);
     }
 
     togleCheckboxAll(completed) {
-      this.getTodos('PATCH', 'http://127.0.0.1:9000/todos', { completed });
+      this.getTodos('PATCH', TODOS, { completed });
     }
 
     setClearCompletedDiv() {
@@ -168,7 +172,7 @@
       if (target.classList.contains('remove-todo')) {
         const { id } = target.parentNode;
 
-        this.getTodos('DELETE', `http://127.0.0.1:9000/todos/${id}`);
+        this.getTodos('DELETE', TODO(id));
       }
     }
 
