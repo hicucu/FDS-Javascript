@@ -168,7 +168,7 @@
       this.changeTodosList(displayList);
       this.setClearCompletedDiv();
       this.setCheckboxAll();
-      this.togleLoading();
+      this.togleLoading(false);
     }
 
     removeTodo(target) {
@@ -183,8 +183,8 @@
       return this.todos.length ? Math.max(...this.todos.map(todo => todo.id)) + 1 : 1;
     }
 
-    togleLoading() {
-      if (!this.isLoading) {
+    togleLoading(isOn) {
+      if (!isOn) {
       // 스피너 끄기
         const loading = document.querySelector('.loading');
         if (loading) loading.remove();
@@ -204,13 +204,17 @@
     }
 
     getTodos(method, uri, payload) {
-      this.togleLoading();
+      this.togleLoading(true);
       const headers = { 'Content-Type': 'application/json' };
       const body = JSON.stringify(payload);
 
       fetch(uri, { method, headers, body }).then(res => res.json())
         .then(res => { this.todos = res; })
-        .catch(console.error);
+        .catch(() => {
+          this.togleLoading(false);
+          this.render();
+          console.error();
+        });
     }
   }
 

@@ -10468,7 +10468,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.changeTodosList(displayList);
         this.setClearCompletedDiv();
         this.setCheckboxAll();
-        this.togleLoading();
+        this.togleLoading(false);
       }
     }, {
       key: "removeTodo",
@@ -10487,8 +10487,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       }
     }, {
       key: "togleLoading",
-      value: function togleLoading() {
-        if (!this.isLoading) {
+      value: function togleLoading(isOn) {
+        if (!isOn) {
           // 스피너 끄기
           var loading = document.querySelector('.loading');
           if (loading) loading.remove();
@@ -10514,7 +10514,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       value: function getTodos(method, uri, payload) {
         var _this3 = this;
 
-        this.togleLoading();
+        this.togleLoading(true);
         var headers = {
           'Content-Type': 'application/json'
         };
@@ -10527,7 +10527,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
           return res.json();
         }).then(function (res) {
           _this3.todos = res;
-        })["catch"](console.error);
+        })["catch"](function () {
+          _this3.togleLoading(false);
+
+          _this3.render();
+
+          console.error();
+        });
       }
     }, {
       key: "todos",
