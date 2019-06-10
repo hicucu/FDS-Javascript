@@ -58,9 +58,7 @@
       border: 1px solid #ddd;
       line-height: 1.6rem;
     }
-    /* .tab-content.active {
-      display: block;      
-    } */
+
   </style>
 </head>
 <body>
@@ -82,7 +80,7 @@
               tab => ({ ...tab, active: tab.title === target ? true : false })
             );
           } else if (e.target.classList.contains('icon')) {
-            const target = e.target.classList[2];
+            const target = e.target.classList[e.target.classList.length - 1];
             this.tabsData = this.tabsData.map(
               tab => ({ ...tab, active: tab.iconClass.includes(target) ? true : false })
             );
@@ -92,13 +90,16 @@
       }
 
       renderTab() {
-        const active = this.tabsData.findIndex(tab => tab.active === true);
+        const activeIndex = this.tabsData.findIndex(tab => tab.active === true);
 
-        [...document.querySelector('.tab-group').children].forEach(t => t.classList.remove('active'));
-        document.querySelector('.tab-group').children[active].classList.add('active');
+        const $tabGroupChildren = document.querySelector('.tab-group').children;
+        const $tabContentGroupChildren = document.querySelector('.tab-content-group').children;
 
-        [...document.querySelector('.tab-content-group').children].forEach(content => content.style.display = 'none');
-        document.querySelector('.tab-content-group').children[active].style.display = 'block';
+        [...$tabGroupChildren].forEach(t => t.classList.remove('active'));
+        $tabGroupChildren[activeIndex].classList.add('active');
+
+        [...$tabContentGroupChildren].forEach((content) => { content.style.display = 'none'; });
+        $tabContentGroupChildren[activeIndex].style.display = 'block';
       }
       // tabsData 객체를 기반으로 tab-group 요소를 생성
       renderTabs() {
