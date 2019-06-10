@@ -168,46 +168,30 @@
       // 기본 옵션과 사용자 지정 옵션을 병합
       this.config = Accordion.mergeConfig(options);
       this.$accordion = document.querySelector(this.config.selector);
-      document.querySelector('.accordion li.active .submenu').style.height = `${133}px`;
+      this.$submenu = document.querySelectorAll('.accordion li .submenu');
+      this.$submenu.forEach((menu) => { menu.style.height = menu.parentNode.classList.contains('active') ? `${menu.scrollHeight}px` : '' }) ;
+      this.selector = this.config.selector;  
       // do something!
+      document.querySelector(this.selector).onclick = (e) => { this.selectClick(e) };
+        
+    };
+
+    selectClick(e) {
+      let target = '';
+
+      
+      if (e.target.classList.contains('menu')) {
+        target = e.target.parentNode;
+      } else if (e.target.classList.contains('fa')) {
+        target = e.target.parentNode.parentNode;          
+      } else return;
+
       if (!this.config.multi) {
-        this.singleSelector();
-      } else this.multiSelector();
-    }
-
-    singleSelector() {
-      const selector = this.config.selector;
-      document.querySelector(selector).onclick = (e) => {
-        let target = '';
-
-        if (e.target.classList.contains('menu')) {
-          target = e.target.parentNode;
-        } else if (e.target.classList.contains('fa')) {
-          target = e.target.parentNode.parentNode;          
-        } else return;
-        // document.querySelectorAll('#accordion .li').forEach(menu => menu.classList.remove('active'));
-        document.querySelectorAll(`${selector} > li`).forEach(li => li.classList.remove('active'));
+        document.querySelectorAll(`${this.selector} > li`).forEach(li => li.classList.remove('active'));
         target.classList.add('active');
-        document.querySelectorAll('.accordion li .submenu').forEach((menu) => { menu.style.height = `${0}px`; });
-        document.querySelector('.accordion li.active .submenu').style.height = `${133}px`;
-      };
-    }
+      } else target.classList.toggle('active');
 
-    multiSelector() {
-      const { selector } = this.config;
-
-      document.querySelector(selector).onclick = (e) => {
-        let target = '';
-
-        if (e.target.classList.contains('menu')) {
-          target = e.target.parentNode;
-        } else if (e.target.classList.contains('fa')) {
-          target = e.target.parentNode.parentNode;
-        } else return;
-        target.classList.toggle('active');
-        document.querySelectorAll('.accordion li .submenu').forEach((sub) => { sub.style.height = `${0}px`; });
-        document.querySelectorAll('.accordion li.active .submenu').forEach((sub) => { sub.style.height = `${133}px`; });
-      };
+      this.$submenu.forEach((menu) => { menu.style.height = menu.parentNode.classList.contains('active') ? `${menu.scrollHeight}px` : '' }) ;
     }
 
     static mergeConfig(options) {
