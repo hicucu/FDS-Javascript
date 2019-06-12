@@ -123,9 +123,6 @@
       // do something!
       $handle.style.opacity = 0.7;
 
-      // 오프셋 = 현재(드래그하고 있는 시점)의 마우스 포인터 위치 - 드래그 시작 시점의 마우스 포인터 위치
-
-      // translate3d는 GPU를 사용하므로 absolute의 top, left를 사용하는 것보다 빠르다. top, left는 레이아웃에 영향을 준다.
       if (e.clientX >= left && e.clientX <= right) {
         $handle.style.transform = `translate3d(${e.clientX - left}px, 0, 0)`;
         $fill.style.width = `${e.clientX - left}px`;

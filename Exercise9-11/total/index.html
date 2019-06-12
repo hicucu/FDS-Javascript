@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet">
+  <link href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" rel="stylesheet">
+  <title>Tabs</title>
+  <style>
+    *, *:before, *:after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      background-image: linear-gradient(20deg, #08aeea 0%, #2af598 100%);
+      font-family: 'Open Sans', Sans-serif;
+    }
+    ul {
+      list-style-type: none;
+    }
+
+    h1 {
+      color: #fff;
+      font-size: 2.5rem;
+      text-align: center;
+      padding: 50px 0;
+    }
+  </style>
+  <link rel="stylesheet" href="./css/tab.css">
+  <link rel="stylesheet" href="./css/accordian.css">
+  <link rel="stylesheet" href="./css/rangeSlider.css">
+  <script defer src="js/tab.js"></script>
+  <script defer src="js/accordian.js"></script>
+  <!-- <script defer src="js/rangeSlider.js"></script> -->
+</head>
+<body>
+  <div class="tabs"></div>  
+  <div class="Accodian">
+    <ul id="accordion" class="accordion">
+      <li class="active">
+      <!-- <li> -->
+        <div class="menu"><i class="fa fa-code"></i>Front-end<i class="fa fa-chevron-down"></i></div>
+        <ul class="submenu">
+          <li><a href="#">HTML</a></li>
+          <li><a href="#">CSS</a></li>
+          <li><a href="#">Javascript</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="menu"><i class="fa fa-mobile"></i>Responsive web<i class="fa fa-chevron-down"></i></div>
+        <ul class="submenu">
+          <li><a href="#">Tablets</a></li>
+          <li><a href="#">Mobiles</a></li>
+          <li><a href="#">Desktop</a></li>
+        </ul>
+      </li>
+      <li>
+        <div class="menu"><i class="fa fa-globe"></i>Web Browser<i class="fa fa-chevron-down"></i></div>
+        <ul class="submenu">
+          <li><a href="#">Chrome</a></li>
+          <li><a href="#">Firefox</a></li>
+          <li><a href="#">Safari</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <script>
+  
+  window.onload = function () {
+    
+    const accordion = new Accordion({ multi: false });
+    
+    const tab = new Tab([
+        {
+          title: 'HTML',
+          active: true,
+          iconClass: 'fab fa-html5',
+          content: `<strong>HTML(HyperText Markup Language)</strong> is the most basic building block of the Web.
+            It describes and defines the content of a webpage along with the basic layout of the webpage.
+            Other technologies besides HTML are generally used to describe a web page's
+            appearance/presentation(CSS) or functionality/ behavior(JavaScript).`
+        },
+        {
+          title: 'CSS',
+          active: false,
+          iconClass: 'fab fa-css3',
+          content: `<strong>Cascading Style Sheets(CSS)</strong> is a stylesheet language used to describe
+            the presentation of a document written in HTML or XML (including XML dialects
+            such as SVG, MathML or XHTML). CSS describes how elements should be rendered on screen,
+            on paper, in speech, or on other media.`
+        },
+        {
+          title: 'JavaScript',
+          active: false,
+          iconClass: 'fab fa-js-square',
+          content: `<strong>JavaScript(JS)</strong> is a lightweight interpreted or JIT-compiled programming
+            language with first-class functions. While it is most well-known as the scripting
+            language for Web pages, many non-browser environments also use it, such as Node.js,
+            Apache CouchDB and Adobe Acrobat. JavaScript is a prototype-based, multi-paradigm,
+            dynamic language, supporting object-oriented, imperative, and declarative
+            (e.g. functional programming) styles.`
+        }
+      ]);
+  };
+</script>
+</body>
+</html>
