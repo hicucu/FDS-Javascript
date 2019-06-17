@@ -5,9 +5,9 @@ import { Component, OnInit } from '@angular/core';
   template: `
   
   <div class="container">
-    <app-button [name]="increase" (onClick)="countIncrease()"></app-button>
+    <app-button [name]="'+'" (onClick)="countIncrease()"></app-button>
     <div class="counter">{{count}}</div>
-    <app-button [name]="decrease" (onClick)="countDecrease()"></app-button>
+    <app-button [name]="'-'" (onClick)="countDecrease()"></app-button>
   </div>
   `,
   styles: [
@@ -36,9 +36,6 @@ export class CounterComponent implements OnInit {
   }
   
   count:number = 0;
-
-  increase = '+';
-  decrease = '-';
   
   countIncrease() {
     this.count += 1;
