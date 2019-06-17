@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
     <div class="tabs">
       <ul class="tab-group">
         <li class="tab" [class.active]="tab.active" *ngFor ="let tab of tabs; index as i" (click)="changeActive(i)">
-          <i [class]="tab.iconClass"></i>{{tab.title}}
+          <i [class]="'icon '+tab.iconClass"></i>{{tab.title}}
         </li>
       </ul>
       <div class="tab-content-group">
