@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-counter',
   template: `
   
   <div class="container">
-    <app-button [name]="'+'" (onClick)="countIncrease()"></app-button>
+    <app-button [print]="'+'" (onClick)="countIncrease()"></app-button>
     <div class="counter">{{count}}</div>
-    <app-button [name]="'-'" (onClick)="countDecrease()"></app-button>
+    <app-button [print]="'-'" (onClick)="countDecrease()"></app-button>
   </div>
   `,
   styles: [
@@ -29,13 +29,11 @@ import { Component, OnInit } from '@angular/core';
     `
   ]
 })
-export class CounterComponent implements OnInit {
+export class CounterComponent{
 
   constructor() { }
-  ngOnInit() {
-  }
   
-  count:number = 0;
+  count = 0;
   
   countIncrease() {
     this.count += 1;

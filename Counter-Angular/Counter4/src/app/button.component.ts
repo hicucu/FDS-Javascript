@@ -1,9 +1,9 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, Input, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-button',
   template: `
-    <button (click)="onClick.emit()">{{name}}</button>
+    <button (click)="onClick.emit()">{{print}}</button>
   `,
   styles: [
     `
@@ -19,14 +19,11 @@ import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
     `
   ]
 })
-export class ButtonComponent implements OnInit {
+export class ButtonComponent {
 
   constructor() { }
 
-  ngOnInit() {
-
-  }
-  @Input() name:string;
-  @Output() onClick = new EventEmitter();
+  @Input() print:string;
+  @Output() onClick = new EventEmitter<void>();  
 
 }

@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { IncreaseComponent } from './increase.component';
 import { DecreaseComponent } from './decrease.component';
 import { CounterComponent } from './counter.component';
+import { AngularWaitBarrier } from 'blocking-proxy/built/lib/angular_wait_barrier';
 
 @NgModule({
   declarations: [
