@@ -9,10 +9,10 @@ import { Component, EventEmitter, Output } from '@angular/core';
 })
 export class TodoInputComponent {
   @Output() add = new EventEmitter();
-
+  
   addTodo(input:HTMLInputElement) {
     this.add.emit(input.value);
     input.value = '';
   }
-
+  
 }

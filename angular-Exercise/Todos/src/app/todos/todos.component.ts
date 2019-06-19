@@ -22,7 +22,7 @@ export class TodosComponent {
     this.todos = [{id:this.generateID(), content:id, completed:false},...this.todos]
   }
   generateID() {
-    return Math.max(...this.todos.map(todo => todo.id))+1;
+    return this.todos.length ? Math.max(...this.todos.map(todo => todo.id))+1 : 1;
   }
 
   toggleTodo(id:number) {
