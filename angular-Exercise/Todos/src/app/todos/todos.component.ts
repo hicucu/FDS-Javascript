@@ -18,8 +18,8 @@ export class TodosComponent {
     { id: 2, content: 'CSS', completed: true },
     { id: 3, content: 'Javascript', completed: false }
   ]
-  addTodos(id:string) {
-    this.todos = [{id:this.generateID(), content:id, completed:false},...this.todos]
+  addTodos(content:string) {
+    this.todos = [{id:this.generateID(), content, completed:false},...this.todos]
   }
   generateID() {
     return this.todos.length ? Math.max(...this.todos.map(todo => todo.id))+1 : 1;
