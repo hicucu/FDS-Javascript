@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {ITodo} from '../itodo'
+import {ITodo} from '../itodo';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
@@ -55,7 +55,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
       margin: 0 auto;
       padding: 15px;
     }
-    
+
     .title {
       /* margin: 10px 0; */
       font-size: 4.5em;
@@ -63,14 +63,14 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
       text-align: center;
       color: #23b7e5;
     }
-    
+
     .ver {
       font-weight: 100;
       text-align: center;
       color: #23b7e5;
       margin-bottom: 30px;
     }
-    
+
     /* .input-todo  */
     .input-todo {
       display: block;
@@ -86,38 +86,38 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
       outline: none;
       transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
     }
-    
+
     .input-todo:focus {
       border-color: #23b7e5;
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
     }
-    
+
     .input-todo::-webkit-input-placeholder {
       color: #999;
     }
-    
+
     /* .nav */
     .nav {
       display: flex;
       margin: 15px;
       list-style: none;
     }
-    
+
     .nav > li {
       padding: 4px 10px;
       border-radius: 4px;
       cursor: pointer;
     }
-    
+
     .nav > li.active {
       color: #fff;
       background-color: #23b7e5;
     }
-    
+
     .todos {
       margin-top: 20px;
     }
-    
+
     /* .todo-item */
     .todo-item {
       position: relative;
@@ -130,7 +130,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
       border-color: #e7ecee;
       list-style: none;
     }
-    
+
     .todo-item:first-child {
       border-top-left-radius: 4px;
       border-top-right-radius: 4px;
@@ -139,20 +139,20 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
     }
-    
+
     /*
       .custom-checkbox
       custom-checkbox 바로 뒤에 위치한 label의 before와 after를 사용해
       custom-checkbox의 외부 박스와 내부 박스를 생성한다.
-    
+
       <input class="custom-checkbox" type="checkbox" id="myId">
       <label for="myId">Content</label>
     */
-    
+
     .custom-checkbox {
       display: none;
     }
-    
+
     .custom-checkbox + label {
       position: absolute; /* 부모 위치를 기준으로 */
       top: 50%;
@@ -165,7 +165,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
       cursor: pointer;
       user-select: none;
     }
-    
+
     .custom-checkbox + label:before {
       content: "";
       position: absolute;
@@ -177,7 +177,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
       background-color: #fff;
       border: 1px solid #cfdadd;
     }
-    
+
     .custom-checkbox:checked + label:after {
       content: "";
       position: absolute;
@@ -188,7 +188,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
       height: 10px;
       background-color: #23b7e5;
     }
-    
+
     /* .remove-todo button */
     .remove-todo {
       display: none;
@@ -198,28 +198,28 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
       cursor: pointer;
       transform: translate3d(0, -50%, 0);
     }
-    
+
     /* todo-item이 호버 상태이면 삭제 버튼을 활성화 */
     .todo-item:hover > .remove-todo {
       display: block;
     }
-    
+
     .footer {
       display: flex;
       justify-content: space-between;
       margin: 20px 0;
     }
-    
+
     .complete-all, .clear-completed {
       position: relative;
       flex-basis: 50%;
     }
-    
+
     .clear-completed {
       text-align: right;
       padding-right: 15px;
     }
-    
+
     .btn {
       padding: 1px 5px;
       font-size: .8em;
@@ -231,98 +231,107 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
       border-color: #ccc;
       cursor: pointer;
     }
-    
+
     .btn:hover {
       color: #333;
       background-color: #e6e6e6;
       border-color: #adadad;
     }
-    
+
     `
   ]
 })
 export class TodosComponent {
-  _todos:ITodo[] = [
+  private _todos: ITodo[] = [
     { id: 1, content: 'HTML', completed: true },
     { id: 2, content: 'CSS', completed: true },
     { id: 3, content: 'Javascript', completed: false }
   ];
-  displayTodos = this._todos;
-    
-  completedTodo:number = 0;
-  allTodo:number = 0;
+
+  private _displayTodos: ITodo[] = [];
+  private _currentActive = 'all';
+
+  completedTodo = 0;
+  allTodo = 0;
   isAllCompleted = false;
-  _currentActive = 'all';
 
   constructor() {
     this.todos = this._todos;
   }
 
-  setActive(id:string) {
-    this.currentActive = id;
-  }
-  isActive(id:string) {
-    return this.currentActive===id;
+  get displayTodos() {
+    return this._displayTodos;
   }
 
-  set todos(todos:ITodo[]){
-    this._todos = todos;    
+
+  set todos(todos: ITodo[]) {
+    this._todos = todos;
 
     this.completedTodo = this._todos.filter( todo => todo.completed).length;
     this.allTodo = this._todos.length;
-    this.isAllCompleted = this._todos.length ? this._todos.filter(todo => todo.completed).length === this._todos.length? true : false : false
-    this.setDisplayTodos(this._currentActive);
-    
+
+    this.isAllCompleted = this._todos.length ?
+    this._todos.filter(todo => todo.completed).length === this._todos.length ? true : false : false;
+
+    this.setDisplayTodos(this.currentActive);
   }
+
   get todos() {
     return this._todos;
   }
 
-  set currentActive(id:string) {
-    this._currentActive = id;
-    this.setDisplayTodos(this._currentActive);
+  set currentActive(id: string) {
+    this.currentActive = id;
+    this.setDisplayTodos(this.currentActive);
   }
 
   get currentActive() {
-    return this._currentActive;
+    return this.currentActive;
   }
 
-  setDisplayTodos(id:string) {
-    this.displayTodos = [];
-
-    if(id==='all')
-      Object.assign(this.displayTodos, this._todos);
-    else if(id==='active')
-      Object.assign(this.displayTodos, this._todos.filter(todo => !todo.completed));
-    else
-      Object.assign(this.displayTodos, this._todos.filter(todo => todo.completed));
+  setActive(id: string) {
+      this.currentActive = id;
+  }
+  isActive(id: string) {
+      return this.currentActive === id;
   }
 
-  toggleAll(completed:boolean) {
+  setDisplayTodos(id: string) {
+    this._displayTodos = [];
+
+    if (id === 'all') {
+    Object.assign(this.displayTodos, this.todos);
+    } else if (id === 'active') {
+    Object.assign(this.displayTodos, this.todos.filter(todo => !todo.completed));
+    } else {
+      Object.assign(this.displayTodos, this.todos.filter(todo => todo.completed));
+    }
+  }
+
+  toggleAll(completed: boolean) {
     this.isAllCompleted = completed;
-    this.todos = this.todos.map(todo => { return  { ...todo, completed } });
+    this.todos = this.todos.map(todo => ({ ...todo, completed }));
   }
 
   clearCompleted() {
     this.todos = this.todos.filter(todo => !todo.completed);
   }
 
-  removeTodo(id:number) {
+  removeTodo(id: number ) {
     this.todos = this.todos.filter(todo => todo.id !== id);
   }
 
-  toggleTodo(id:number) {    
-    this.todos = this.todos.map(todo => todo.id===id ? {...todo, completed:!todo.completed} : todo);
+  toggleTodo(id: number ) {
+    this.todos = this.todos.map(todo => todo.id === id ? {...todo, completed: !todo.completed} : todo);
   }
 
   generateId() {
-    return this.todos.length ? Math.max(...this.todos.map(todo => todo.id))+1 : 1;
+    return this.todos.length ? Math.max(...this.todos.map(todo => todo.id)) + 1 : 1;
   }
 
-  addTodo(target:HTMLInputElement) {
-    let tempTodo = {id:this.generateId(), content:target.value, completed:false};
+  addTodo(target: HTMLInputElement ) {
+    const tempTodo = {id: this.generateId(), content: target.value, completed: false};
     this.todos = [tempTodo, ...this.todos];
     target.value = '';
   }
-
 }
