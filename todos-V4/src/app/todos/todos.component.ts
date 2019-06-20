@@ -286,7 +286,7 @@ export class TodosComponent {
   }
 
   get currentActive() {
-    return this.currentActive;
+    return this._currentActive;
   }
 
   setActive(id: string) {
