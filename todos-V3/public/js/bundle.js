@@ -10288,8 +10288,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
       this._todos = t;
       this._navTarget = 'all';
-      this.init();
-      this.getTodos('GET', TODOS);
+      this.init(); // this.getTodos('GET', TODOS);
+
+      this.getTodos('GET', 'https://bkzpm5tkrj.execute-api.ap-northeast-2.amazonaws.com/todos');
       this.isLoading = false;
     }
 
@@ -10307,11 +10308,11 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         });
 
         this.$todos.onchange = function (e) {
-          _this.togleTodo(e.target);
+          _this.toggleTodo(e.target);
         };
 
         this.$ckCompleteAll.onclick = function (e) {
-          _this.togleCheckboxAll(e.target.checked);
+          _this.toggleCheckboxAll(e.target.checked);
         };
 
         var clearCompletedBtn = document.querySelector('.clear-completed > .btn');
@@ -10333,11 +10334,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         };
       }
     }, {
-      key: "togleTodo",
-      value: function togleTodo(target) {
+      key: "toggleTodo",
+      value: function toggleTodo(target) {
         var id = target.parentNode.id;
-        var completed = target.checked;
-        this.getTodos('PATCH', TODO(id), {
+        var completed = target.checked; // this.getTodos('PATCH', TODO(id), { id, completed });
+
+        this.getTodos('PATCH', "https://bkzpm5tkrj.execute-api.ap-northeast-2.amazonaws.com/todos/".concat(id), {
           id: id,
           completed: completed
         });
@@ -10371,8 +10373,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.getTodos('DELETE', COMPLETE);
       }
     }, {
-      key: "togleCheckboxAll",
-      value: function togleCheckboxAll(completed) {
+      key: "toggleCheckboxAll",
+      value: function toggleCheckboxAll(completed) {
         this.getTodos('PATCH', TODOS, {
           completed: completed
         });
@@ -10468,7 +10470,7 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         this.changeTodosList(displayList);
         this.setClearCompletedDiv();
         this.setCheckboxAll();
-        this.togleLoading(false);
+        this.toggleLoading(false);
       }
     }, {
       key: "removeTodo",
@@ -10486,8 +10488,8 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }))) + 1 : 1;
       }
     }, {
-      key: "togleLoading",
-      value: function togleLoading(isOn) {
+      key: "toggleLoading",
+      value: function toggleLoading(isOn) {
         if (!isOn) {
           // 스피너 끄기
           var loading = document.querySelector('.loading');
@@ -10514,11 +10516,12 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
       value: function getTodos(method, uri, payload) {
         var _this3 = this;
 
-        this.togleLoading(true);
+        this.toggleLoading(true);
         var headers = {
           'Content-Type': 'application/json'
         };
         var body = JSON.stringify(payload);
+        console.log(body);
         fetch(uri, {
           method: method,
           headers: headers,
@@ -10526,13 +10529,13 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
         }).then(function (res) {
           return res.json();
         }).then(function (res) {
-          _this3.todos = res;
-        })["catch"](function () {
-          _this3.togleLoading(false);
+          _this3.todos = res.Items;
+        })["catch"](function (error) {
+          _this3.toggleLoading(false);
 
           _this3.render();
 
-          console.error();
+          console.log(error);
         });
       }
     }, {

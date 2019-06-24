@@ -12,7 +12,9 @@
 
       this.init();
 
-      this.getTodos('GET', TODOS);
+      // this.getTodos('GET', TODOS);
+      this.getTodos('GET', 'https://bkzpm5tkrj.execute-api.ap-northeast-2.amazonaws.com/todos');
+
 
       this.isLoading = false;
     }
@@ -43,9 +45,9 @@
 
       this.$todos.addEventListener('click', e => this.removeTodo(e.target));
 
-      this.$todos.onchange = e => { this.togleTodo(e.target); };
+      this.$todos.onchange = e => { this.toggleTodo(e.target); };
 
-      this.$ckCompleteAll.onclick = e => { this.togleCheckboxAll(e.target.checked); };
+      this.$ckCompleteAll.onclick = e => { this.toggleCheckboxAll(e.target.checked); };
 
       const clearCompletedBtn = document.querySelector('.clear-completed > .btn');
 
@@ -64,10 +66,11 @@
       };
     }
 
-    togleTodo(target) {
+    toggleTodo(target) {
       const { id } = target.parentNode;
       const completed = target.checked;
-      this.getTodos('PATCH', TODO(id), { id, completed });
+      // this.getTodos('PATCH', TODO(id), { id, completed });
+      this.getTodos('PATCH', `https://bkzpm5tkrj.execute-api.ap-northeast-2.amazonaws.com/todos/${id}`, { id, completed });
     }
 
     addTodo() {
@@ -90,7 +93,7 @@
       this.getTodos('DELETE', COMPLETE);
     }
 
-    togleCheckboxAll(completed) {
+    toggleCheckboxAll(completed) {
       this.getTodos('PATCH', TODOS, { completed });
     }
 
@@ -168,7 +171,7 @@
       this.changeTodosList(displayList);
       this.setClearCompletedDiv();
       this.setCheckboxAll();
-      this.togleLoading(false);
+      this.toggleLoading(false);
     }
 
     removeTodo(target) {
@@ -183,7 +186,7 @@
       return this.todos.length ? Math.max(...this.todos.map(todo => todo.id)) + 1 : 1;
     }
 
-    togleLoading(isOn) {
+    toggleLoading(isOn) {
       if (!isOn) {
       // 스피너 끄기
         const loading = document.querySelector('.loading');
@@ -204,16 +207,17 @@
     }
 
     getTodos(method, uri, payload) {
-      this.togleLoading(true);
+      this.toggleLoading(true);
       const headers = { 'Content-Type': 'application/json' };
       const body = JSON.stringify(payload);
+      console.log(body);
 
       fetch(uri, { method, headers, body }).then(res => res.json())
-        .then(res => { this.todos = res; })
-        .catch(() => {
-          this.togleLoading(false);
+        .then(res => { this.todos = res.Items; })
+        .catch(error => {
+          this.toggleLoading(false);
           this.render();
-          console.error();
+          console.log(error);
         });
     }
   }
