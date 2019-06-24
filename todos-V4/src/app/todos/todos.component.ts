@@ -1,10 +1,10 @@
-import { Component } from '@angular/core';
+import { Component } from "@angular/core";
 
-import { ITodo } from '../itodo';
-import { navItem } from '../nav-item.type';
+import { ITodo } from "../itodo";
+import { navItem } from "../nav-item.type";
 
 @Component({
-  selector: 'app-todos',
+  selector: "app-todos",
   template: `
     <div class="container">
       <h1 class="title">Todos</h1>
@@ -26,7 +26,7 @@ import { navItem } from '../nav-item.type';
         </li>
       </ul>
 
-      <ul class="todos" *ngIf="todos; else loading">
+      <ul class="todos">
         <li
           class="todo-item"
           *ngFor="let todo of todos | todosFilter: currentActive"
@@ -46,7 +46,6 @@ import { navItem } from '../nav-item.type';
           </i>
         </li>
       </ul>
-      <ng-template #loading>Loading...</ng-template>
 
       <div class="footer">
         <div class="complete-all">
@@ -270,9 +269,9 @@ import { navItem } from '../nav-item.type';
 export class TodosComponent {
   private _todos: ITodo[] = [];
 
-  private _currentActive: navItem = 'All';
+  private _currentActive: navItem = "All";
 
-  navItems: navItem[] = ['All', 'Active', 'Completed'];
+  navItems: navItem[] = ["All", "Active", "Completed"];
 
   completedTodo = 0;
   allTodo = 0;
@@ -296,9 +295,9 @@ export class TodosComponent {
   }
 
   get todos() {
-    if (this._currentActive === 'All') {
+    if (this._currentActive === "All") {
       return this._todos.filter(todo => todo);
-    } else if (this._currentActive === 'Active') {
+    } else if (this._currentActive === "Active") {
       return this._todos.filter(todo => !todo.completed);
     } else {
       return this._todos.filter(todo => todo.completed);
@@ -316,9 +315,9 @@ export class TodosComponent {
 
   getTodos() {
     this.todos = [
-      { id: 1, content: 'HTML', completed: true },
-      { id: 2, content: 'CSS', completed: true },
-      { id: 3, content: 'Javascript', completed: false }
+      { id: 1, content: "HTML", completed: true },
+      { id: 2, content: "CSS", completed: true },
+      { id: 3, content: "Javascript", completed: false }
     ];
   }
 
@@ -365,6 +364,6 @@ export class TodosComponent {
     };
     this._todos = [tempTodo, ...this._todos];
 
-    target.value = '';
+    target.value = "";
   }
 }
