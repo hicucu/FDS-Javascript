@@ -8,7 +8,7 @@ import { navItem } from "../nav-item.type";
   template: `
     <div class="container">
       <h1 class="title">Todos</h1>
-      <div class="ver">4.0</div>
+      <div class="ver">5.0</div>
       <app-todo-form (add)="addTodo($event)"> </app-todo-form>
       <app-todo-nav
         [currentActive]="currentActive"
