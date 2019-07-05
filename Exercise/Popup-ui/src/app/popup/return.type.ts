@@ -1,0 +1,1 @@
+export type returnType = string | false;

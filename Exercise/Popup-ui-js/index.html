@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Popup</title>
+    <style>
+      @import url(https://fonts.googleapis.com/css?family=Open+Sans:300, 400);
+
+      body {
+        font-family: "Open Sans";
+        font-weight: 300;
+        background-color: #d6e1e5;
+      }
+
+      h1 {
+        color: #db5b33;
+        font-weight: 300;
+        text-align: center;
+      }
+
+      .popup {
+        transform: translateX(-50%);
+        position: absolute;
+        left: 50%;
+        display: block;
+        margin: 20px auto;
+        top: 0;
+        background: white;
+        padding: 10px;
+        box-shadow: 10px 10px 10px 10px rgba(0, 0, 0, 0.5);
+        z-index: 100;
+      }
+      .btn-close {
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 30px;
+        font-size: 1.1rem;
+        background: transparent;
+        border: 0;
+      }
+      .overlay {
+        position: absolute;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        top: 0;
+        left: 0;
+      }
+
+      /* CSS 작성 바랍니다. */
+    </style>
+  </head>
+  <body>
+    <h1>JavaScript Popup</h1>
+
+    <div class="popup">
+      <h1>JavaScript Popup</h1>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam
+      </p>
+      <button class="btn-close">X</button>
+      <input type="text" />
+      <button class="btn-ok">OK</button>
+      <button class="btn-cancel">Cancel</button>
+    </div>
+    <div class="overlay"></div>
+
+    <button class="toggle-popup">show popup</button>
+
+    <p class="popup-message"></p>
+    <script>
+      class App {
+        constructor() {}
+      }
+    </script>
+  </body>
+</html>
